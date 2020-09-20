@@ -1,0 +1,33 @@
+#include <Servo.h>
+Servo servo1;
+const int ledPin = 13;
+const int soundPin = A0;
+
+void setup()
+{
+  pinMode(ledPin,OUTPUT);
+  Serial.begin(9600);
+  servo1.attach(9);//servo is attached to pin 9
+  servo1.write(00);
+}
+
+void loop()
+{
+  int value = analogRead(soundPin);//read the value of A0
+  Serial.println(value);//print the value
+  if(value > 400) //if the value is greater than 600
+  {
+    digitalWrite(ledPin,HIGH);//turn on the led
+    servo1.write(15);//turns the servo 15 degrees
+    delay(2000);//press and hold
+    digitalWrite(ledPin,LOW);//turns off the led
+    servo1.write(0);//returns the servo to off position
+    delay(100);//clears error with loop
+  }
+  else
+  {
+    digitalWrite(ledPin,LOW);//turns off the led
+    servo1.write(0);//returns servo to off position
+
+  }
+}
